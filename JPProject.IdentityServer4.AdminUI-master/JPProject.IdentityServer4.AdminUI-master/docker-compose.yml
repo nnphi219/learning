@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+
+    # #############################
+    # # Management API - Light
+    # #############################
+    jpproject-light-api:
+        image: jpproject-light-api
+        build: 
+          context: .
+          dockerfile: api-light.dockerfile
+        environment: 
+            ASPNETCORE_ENVIRONMENT: "Development"
+            ASPNETCORE_URLS: http://+
+            CUSTOMCONNSTR_SSOConnection: "<your conn string>"
+            ApplicationSettings:Authority: "<YOUR Auth server>"
+            ApplicationSettings:DatabaseType: SqlServer # Options: SqlServer / MySql / Sqlite / PostgreSql
+            ApplicationSettings:RequireHttpsMetadata: 'false'
+            ApplicationSettings:ApiName: jp_api
+            ApplicationSettings:ApiSecret: "Q&tGrEQMypEk.XxPU:%bWDZMdpZeJiyMwpLv4F7d**w9x:7KuJ#fy,E8KPHpKz++"
+
+    #############################
+    # Admin Ui
+    #############################
+    jpproject-admin:
+        image: jpproject-admin
+        build: 
+            context: .
+            dockerfile: admin-ui.dockerfile
+
+
+    reverse-proxy:
+        container_name: jpproject-light
+        build:
+            context: .
+            dockerfile: nginx.dockerfile
+        ports:
+            - '5002:5002'
+            - '4300:4300'
+        depends_on:
+            - 'jpproject-light-api'
+            - 'jpproject-admin'
+        

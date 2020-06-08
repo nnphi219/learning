@@ -1,0 +1,25 @@
+version: 1.2.{build}
+image: Visual Studio 2019 Preview
+branches:
+  only:
+  - master
+pull_requests:
+  do_not_increment_build_number: true
+
+init:
+  # Good practice, because Windows line endings are different from Unix/Linux ones
+  - cmd: git config --global core.autocrlf true
+before_build:
+  # Display .NET Core version
+  - cmd: dotnet --version
+  # Display minimal restore text
+  - cmd: dotnet restore ./src --verbosity m
+  # angular restore
+  - cmd: npm install src/Frontend/Jp.UserManagement
+
+build_script:
+  - cmd: dotnet build ./src
+  - cmd: run build src/Frontend/Jp.UserManagement --base-href=/user-management/
+
+test_script:
+  - cmd: dotnet test ./src
