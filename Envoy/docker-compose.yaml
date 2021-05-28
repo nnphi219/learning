@@ -22,6 +22,8 @@ services:
       - envoymesh
     environment:
       - SERVICE_NAME=1
+    ports:
+      - "8081:8080"
 
   service2:
     build:
@@ -33,6 +35,8 @@ services:
       - envoymesh
     environment:
       - SERVICE_NAME=2
+    ports:
+      - "8082:8080"
 
 networks:
   envoymesh: {}
