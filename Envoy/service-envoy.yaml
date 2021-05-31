@@ -22,6 +22,10 @@ static_resources:
                   prefix: "/service"
                 route:
                   cluster: local_service
+              - match:
+                  prefix: "/web1"
+                route:
+                  cluster: web1_cluster
           http_filters:
           - name: envoy.filters.http.router
             typed_config: {}
@@ -39,6 +43,19 @@ static_resources:
               socket_address:
                 address: 127.0.0.1
                 port_value: 8080
+  - name: web1_cluster
+    connect_timeout: 0.25s
+    type: STRICT_DNS
+    lb_policy: ROUND_ROBIN
+    load_assignment:
+      cluster_name: web1_cluster
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: 127.0.0.1
+                port_value: 80
 admin:
   address:
     socket_address:
