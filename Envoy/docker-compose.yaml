@@ -43,7 +43,7 @@ services:
       context: .
       dockerfile: Web.Api1/Dockerfile
     networks:
-      - envoy_network
+      - envoymesh
     ports:
       - "7001:80"
 
