@@ -26,7 +26,7 @@ static_resources:
               domains: ["*"]
               routes:
               - match:
-                  prefix: "web1"
+                  prefix: "/web1"
                 route:
                   prefix_rewrite: "/WeatherForecast"
                   cluster: webapi1_service
