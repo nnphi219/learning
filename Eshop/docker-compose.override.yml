@@ -187,6 +187,11 @@ services:
     - "5202:80"
     - "15202:8001"
 
+  webapp1:
+    ports:
+    - "6000:80"
+    - "6001:443"
+
   mobileshoppingagg:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development

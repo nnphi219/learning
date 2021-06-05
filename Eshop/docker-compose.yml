@@ -159,3 +159,9 @@ services:
 
   webshoppingapigw:
     image: envoyproxy/envoy:v1.11.1
+
+  webapp1:
+    image: ${REGISTRY:-eshop}/webapp1
+    build:
+      context: .
+      dockerfile: WebApp1/WebApp1/Dockerfile
